@@ -73,14 +73,6 @@ public class PlayerController : MonoBehaviour
         //status.IsWalk = true;
         animator.Play(WALK_HASH);
         rigid.velocity = new Vector2(inputX * moveSpeed, rigid.velocity.y);
-        //if (inputX < 0)
-        //{
-        //    spriteRenderer.flipX = true;
-        //}
-        //else
-        //{
-        //    spriteRenderer.flipX = false;
-        //}
         spriteRenderer.flipX  = inputX < 0 ? true : false;
         
     }

@@ -41,25 +41,16 @@ public class CharMonster : Monster
     private void Update()
     {
         if (count <= 0)
-        {
             CanMoving = true;
-        }
         else
-        {
             count -= Time.deltaTime;
-        }
 
         Move();
     }
 
     private void Move()
     {
-        if (!CanMoving)
-        {
-            return;
-        }
-
-        
+        if (!CanMoving) return;
         if (changeWalk)
         {
             spriteRenderer.flipX = true;
@@ -72,8 +63,6 @@ public class CharMonster : Monster
             surfaceEffector.speed = moveSpeed;
             IsWalk = true;
         }
-        
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

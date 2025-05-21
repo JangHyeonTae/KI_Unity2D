@@ -713,6 +713,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharMonster
       objectReference: {fileID: 0}
+    - target: {fileID: 1003894080194772824, guid: e1e3cc35df106744d89afe04266ebbec, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3872555975127819752, guid: e1e3cc35df106744d89afe04266ebbec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.606134
@@ -1013,8 +1017,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1813284234}
   - component: {fileID: 1813284233}
-  - component: {fileID: 1813284232}
   - component: {fileID: 1813284235}
+  - component: {fileID: 1813284232}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -1210,6 +1214,10 @@ PrefabInstance:
     - target: {fileID: 3872555975127819752, guid: c97cd45d55aaf7d46a2f697437ee38b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556144417898618677, guid: c97cd45d55aaf7d46a2f697437ee38b5, type: 3}
+      propertyPath: m_FlipX
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
