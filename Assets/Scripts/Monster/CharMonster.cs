@@ -17,14 +17,12 @@ public class CharMonster : Monster
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] SurfaceEffector2D surfaceEffector;
 
-
-    private bool changeWalk = true;
+    private bool changeWalk = false;
     private float count;
     [SerializeField] private float countDelay;
 
     [SerializeField] private LayerMask wallLayer;
 
-    public int rand;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -44,13 +42,11 @@ public class CharMonster : Monster
     {
         if (count <= 0)
         {
-            changeWalk = true;
             CanMoving = true;
         }
         else
         {
             count -= Time.deltaTime;
-            changeWalk = false;
         }
 
         Move();
@@ -63,30 +59,26 @@ public class CharMonster : Monster
             return;
         }
 
+        
         if (changeWalk)
         {
-            rand = Random.Range(0, 2);
-            if (rand == 0)
-            {
-                spriteRenderer.flipX = true;
-                surfaceEffector.speed = -moveSpeed;
-                IsWalk = true;
-                count = countDelay;
-            }
-            else
-            {
-                spriteRenderer.flipX = false;
-                surfaceEffector.speed = moveSpeed;
-                IsWalk = true;
-                count = countDelay;
-            }
+            spriteRenderer.flipX = true;
+            surfaceEffector.speed = -moveSpeed;
+            IsWalk = true;
         }
+        else
+        {
+            spriteRenderer.flipX = false;
+            surfaceEffector.speed = moveSpeed;
+            IsWalk = true;
+        }
+        
         
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == wallLayer)
+        if (collision.gameObject.layer == 7)
         {
             Stop();
         }
@@ -98,6 +90,7 @@ public class CharMonster : Monster
         IsWalk = false;
         spriteRenderer.flipX = !spriteRenderer.flipX;
         surfaceEffector.speed = 0;
+        changeWalk = !changeWalk;
         count = countDelay;
     }
 
