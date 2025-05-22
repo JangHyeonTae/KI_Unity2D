@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterExample : MonoBehaviour
+public class MonsterExample : MonoBehaviour , IDamagable
 {
+    public int hp;
+    public int maxHp = 100;
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private LayerMask groundLayer;
-
+    [SerializeField] private GameObject target;
+    [SerializeField] private HpGuage hpGuage;
     private Rigidbody2D rigid;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -16,14 +19,16 @@ public class MonsterExample : MonoBehaviour
 
     private readonly int IDLE_HASH = Animator.StringToHash("M_Idle");
     private readonly int WALK_HASH = Animator.StringToHash("M_Walk");
-    
+
+
+    Coroutine attackCor;
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        patrolVec = Vector2.left;
-
+        patrolVec = Vector2.right;
+        hp = maxHp;
     }
 
     private void Update()
@@ -69,4 +74,52 @@ public class MonsterExample : MonoBehaviour
         animator.Play(WALK_HASH);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider == null)
+        {
+            if (attackCor == null)
+            {
+               attackCor = StartCoroutine(CorAttack());
+            }
+        }
+    }
+
+    IEnumerator CorAttack()
+    {
+        Attack();
+        yield return new WaitForSeconds(1f);
+        attackCor = null;
+    }
+
+    public void Attack()
+    {
+        IDamagable setTarget = AttackSearch();
+        if (setTarget != null)
+        {
+            setTarget.TakeDamage(10);
+        }
+    }
+
+    private IDamagable AttackSearch()
+    {
+        if (target != null)
+        {
+            return target.GetComponent<IDamagable>();
+        }
+
+        return null;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        hp = Mathf.Max(0, hp - amount);
+        SetHpGuage();
+    }
+
+    public void SetHpGuage()
+    {
+        float percent = hp / (float)maxHp;
+        hpGuage.GetGuage(percent);
+    }
 }
