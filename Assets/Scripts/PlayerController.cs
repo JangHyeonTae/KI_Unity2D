@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
+    public StateMachine stateMachine;
 
     [Header("UI")]
     [SerializeField] private HpGuage hpGuage;
@@ -171,7 +172,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void Heal(int amount)
     {
         Hp = Mathf.Min(MaxHp, Hp + amount);
-        SetHpGuage();
     }
 
     public void SetHpGuage()
